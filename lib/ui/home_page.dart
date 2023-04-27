@@ -1,5 +1,7 @@
-import 'package:dicoding_news_app/settings_page.dart';
-import 'package:dicoding_news_app/styles.dart';
+import 'dart:io';
+
+import 'package:dicoding_news_app/ui/settings_page.dart';
+import 'package:dicoding_news_app/common/styles.dart';
 import 'package:dicoding_news_app/widgets/platform_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +19,21 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _bottomNavIndex = 0;
+  List<BottomNavigationBarItem> _bottomNavBarItems = [
+    BottomNavigationBarItem(
+      icon: Icon(Platform.isIOS ? CupertinoIcons.news : Icons.public),
+      label: "Headline",
+    ),
+    BottomNavigationBarItem(
+      icon: Icon(Platform.isIOS ? CupertinoIcons.news : Icons.settings),
+      label: "Setting",
+    ),
+  ];
+
+  final List<Widget> _listWidget = [
+    ArticleListPage(),
+    SettingsPage(),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -28,20 +45,11 @@ class _HomePageState extends State<HomePage> {
 
   Widget _buildAndroid(BuildContext context) {
     return Scaffold(
-      body: _bottomNavIndex == 0 ? ArticleListPage() : SettingsPage(),
+      body: _listWidget[_bottomNavIndex],
       bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: secodaryColor,
+        selectedItemColor: secondaryColor,
         currentIndex: _bottomNavIndex,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.public),
-            label: 'Headline',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'Settings',
-          ),
-        ],
+        items: _bottomNavBarItems,
         onTap: (selected) {
           setState(() {
             _bottomNavIndex = selected;
@@ -54,7 +62,7 @@ class _HomePageState extends State<HomePage> {
   Widget _buildIos(BuildContext context) {
     return CupertinoTabScaffold(
       tabBar: CupertinoTabBar(
-        activeColor: secodaryColor,
+        activeColor: secondaryColor,
         items: const [
           BottomNavigationBarItem(
             icon: Icon(CupertinoIcons.news),

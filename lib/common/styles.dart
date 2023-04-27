@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 const Color primaryColor = Color(0XFFFFFFFF);
-const Color secodaryColor = Color(0xFF6B38FB);
+const Color secondaryColor = Color(0xFF6B38FB);
 
 final TextTheme myTextTheme = TextTheme(
   displayLarge: GoogleFonts.merriweather(
